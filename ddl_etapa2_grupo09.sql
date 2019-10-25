@@ -1,14 +1,29 @@
+CREATE TABLE funcionario(
+    matricula VARCHAR(20),
+    cpfFuncionario CHAR(11) NOT NULL,
+    nomeFuncionario VARCHAR(50) NOT NULL,
+    enderecoFuncionario VARCHAR(50) NOT NULL,
+    salario FLOAT NOT NULL,
+    funcao VARCHAR(20) NOT NULL,
+    matriculaSupervisor VARCHAR(20),
+    PRIMARY KEY (matricula),
+    FOREIGN KEY (matriculaSupervisor) REFERENCES funcionario(matricula)
+
+);
+
 CREATE TABLE  filial(
-    codIdFilial INT NOT NULL,
+    codIdFilial INT,
     nome VARCHAR(50) NOT NULL,
     endereco  VARCHAR(100) NOT NULL,
     telefone VARCHAR(20),
-    PRIMARY KEY(codIdFilial)
+    matriculaFuncionario VARCHAR(20),
+    PRIMARY KEY(codIdFilial),
+    FOREIGN KEY (matriculaFuncionario) REFERENCES funcionario(matricula)
 
 );
 
 CREATE TABLE cliente(
-    cpfCliente CHAR(11) NOT NULL,
+    cpfCliente CHAR(11),
     nome VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     pontosCRM INT NOT NULL,
@@ -21,24 +36,11 @@ CREATE TABLE cliente(
 
 );
 
-CREATE TABLE funcionario(
-    matricula VARCHAR(20) NOT NULL,
-    cpfFuncionario CHAR(11) NOT NULL,
-    nomeFuncionario VARCHAR(50) NOT NULL,
-    enderecoFuncionario VARCHAR(50) NOT NULL,
-    salario FLOAT NOT NULL,
-    funcao VARCHAR(20) NOT NULL,
-    matriculaSupervisor VARCHAR(20) NOT NULL,
-    PRIMARY KEY (matricula),
-    FOREIGN KEY (matriculaSupervisor) REFERENCES funcionario(matricula)
-
-);
-
 CREATE TABLE dependente(
     cpfDependente CHAR(11) NOT NULL,
     nascimento DATE NOT NULL,
     nomeDependente VARCHAR(50) NOT NULL,
-    matriculaDependente VARCHAR(20) NOT NULL,
+    matriculaDependente VARCHAR(20),
     PRIMARY KEY (cpfDependente),
     FOREIGN KEY (matriculaDependente) REFERENCES funcionario(matricula)
     
@@ -71,12 +73,8 @@ CREATE TABLE categoria(
 
 CREATE TABLE caixa (
     numeroCaixa INT,
-    codIdCaixa INT NOT NULL,
+    codIdCaixa INT,
     PRIMARY KEY (numeroCaixa),
     FOREIGN KEY (codIdCaixa) REFERENCES filial(codIdFilial)
     
 );
-
-
-
-
