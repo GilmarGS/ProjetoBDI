@@ -24,8 +24,8 @@ CREATE TABLE  filial(
 
 CREATE TABLE cliente(
     cpfCliente CHAR(11),
-    nome VARCHAR(50) NOT NULL,
-    email VARCHAR(50) NOT NULL,
+    nomeCliente VARCHAR(50) NOT NULL,
+    emailCliente VARCHAR(50) NOT NULL,
     pontosCRM INT NOT NULL,
     rua VARCHAR(50)NOT NULL,
     numero INT,
@@ -52,11 +52,8 @@ CREATE TABLE dependente(
 CREATE TABLE telefoneFuncionario(
     matriculaFuncionario VARCHAR (20),
     numeroTelFuncionario VARCHAR(20),
-    PRIMARY KEY (matriculaFuncionario)
-   
-    
-    
-
+    PRIMARY KEY (matriculaFuncionario, numeroTelFuncionario)
+ 
 );
 
 CREATE TABLE marca(
@@ -77,4 +74,40 @@ CREATE TABLE caixa (
     PRIMARY KEY (numeroCaixa),
     FOREIGN KEY (codIdCaixa) REFERENCES filial(codIdFilial)
     
+);
+
+CREATE TABLE equipamento (
+    idEquipamento INT,
+    descricao VARCHAR (50) NOT NULL,
+    numeroCaixaEquipamento INT NOT NULL,
+    PRIMARY KEY (idEquipamento),
+    FOREIGN KEY (numeroCaixaEquipamento) REFERENCES caixa(numeroCaixa)
+    
+);
+
+
+CREATE TABLE telefoneCliente(
+    cpfTelCliente VARCHAR (20),
+    numeroTelCliente VARCHAR(20),
+    PRIMARY KEY (cpfTelCliente, numeroTelCliente)
+
+);
+
+CREATE TABLE fornecedor(
+    cnpj VARCHAR(20),
+    nomeFornecedor VARCHAR(50) NOT NULL,
+    enderecoFornecedor VARCHAR(50) NOT NULL,
+    emailFornecedor VARCHAR(50) NOT NULL,
+    siteFornecedor VARCHAR(20) NOT NULL,
+    idCategoriaFornecedor VARCHAR (12),
+    PRIMARY KEY (cnpj),
+    FOREIGN KEY (idCategoriaFornecedor) REFERENCES categoria(idCategoria)
+
+);
+
+CREATE TABLE telefoneFornecedor(
+    cnpjTelForncedor VARCHAR (20),
+    numeroTelFornecedor VARCHAR(20),
+    PRIMARY KEY (cnpjTelForncedor, numeroTelFornecedor)
+
 );
