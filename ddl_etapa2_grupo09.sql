@@ -44,6 +44,13 @@ CREATE TABLE dependente(
     FOREIGN KEY (matriculaDependente) REFERENCES funcionario(matricula)
 );
 
+CREATE TABLE realizaReclamacao (
+    cpfCliente CHAR(11),
+    codIdFilial INT,
+    dataHoraReclamacao TIMESTAMP NOT NULL,
+    descricao VARCHAR(200),
+    PRIMARY KEY (cpfCliente, codIdFilial) 
+);
 
 CREATE TABLE telefoneFuncionario(
     matriculaFuncionario VARCHAR (20),
@@ -80,6 +87,14 @@ CREATE TABLE equipamento (
     
 );
 
+CREATE TABLE realizaManutencao (
+    idEquipamento INT,
+    matFuncionario VARCHAR(20),
+    dataHoraManutencao TIMESTAMP NOT NULL,
+    custo NUMBER NOT NULL,
+    PRIMARY KEY (idEquipamento, matFuncionario) 
+);
+
 CREATE TABLE telefoneCliente(
     cpfTelCliente VARCHAR (20),
     numeroTelCliente VARCHAR(20),
@@ -106,13 +121,13 @@ CREATE TABLE telefoneFornecedor(
 );
 
 CREATE TABLE ordemDeCompra(
-    numNotaFiscal VARCHAR(20),
+    numOrdemDeCompra VARCHAR(20),
     dataEHotaVenda TIMESTAMP NOT NULL,
     numCaixa INT NOT NULL,
     cpfCliente CHAR(11) NOT NULL,
     codIdFilial INT NOT NULL,
     matFuncionario VARCHAR(20) NOT NULL,
-    PRIMARY KEY (numNotaFiscal),
+    PRIMARY KEY (numOrdemDeCompra),
     FOREIGN KEY (numCaixa) REFERENCES caixa(numeroCaixa),
     FOREIGN KEY (cpfCliente) REFERENCES cliente (cpfCliente),
     FOREIGN KEY (codIdFilial) REFERENCES filial (codIdFilial),
@@ -134,7 +149,7 @@ CREATE TABLE solicitacao(
 );
 
 CREATE TABLE notafiscal(
-    numNotaFiscal NUMBER,
+    numNotaFiscal VARCHAR(20),
     cnpjNotaFiscal VARCHAR(20) NOT NULL,
     quantidade INT,
     dataNotaFiscal DATE NOT NULL,
@@ -142,4 +157,31 @@ CREATE TABLE notafiscal(
     idNFSolicitacao INT NOT NULL,
     PRIMARY KEY (numNotaFiscal),
     FOREIGN KEY(idNFSolicitacao) REFERENCES solicitacao(idSolicitacao)
+);
+
+CREATE TABLE item (
+    idItem INT,
+    quantidadeItens INT NOT NULL,
+    desconto NUMBER,
+    numOrdemDeCompra VARCHAR(20) NOT NULL,
+    numNotaFiscal VARCHAR(20) NOT NULL,
+    codIdProduto INT NOT NULL,    
+    PRIMARY KEY (idItem),
+    FOREIGN KEY (numOrdemDeCompra) REFERENCES ordemDeCompra(numOrdemDeCompra),
+    FOREIGN KEY (numNotaFiscal) REFERENCES notafiscal (numNotaFiscal), 
+    FOREIGN KEY (codIdProduto) REFERENCES produto (codIdProduto) 
+);
+
+CREATE TABLE produto (
+    codIdProduto INT,
+    nomeProduto VARCHAR(10) NOT NULL,
+    descricao VARCHAR(50) NOT NULL,
+    margemLucroMin NUMBER NOT NULL,
+    codIdFilial INT NOT NULL,
+    idMarca VARCHAR (12) NOT NULL,   
+    idCategoria VARCHAR (12) NOT NULL,  
+    PRIMARY KEY (idItem),
+    FOREIGN KEY (codIDFilial) REFERENCES filial(codIdFilial),
+    FOREIGN KEY (idMarca) REFERENCES marca (idMarca), 
+    FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria) 
 );
