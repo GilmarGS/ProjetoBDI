@@ -159,6 +159,20 @@ CREATE TABLE notafiscal(
     FOREIGN KEY(idNFSolicitacao) REFERENCES solicitacao(idSolicitacao)
 );
 
+CREATE TABLE produto (
+    codIdProduto INT,
+    nomeProduto VARCHAR(10) NOT NULL,
+    descricao VARCHAR(50) NOT NULL,
+    margemLucroMin NUMBER NOT NULL,
+    codIdFilial INT NOT NULL,
+    idMarca VARCHAR (12) NOT NULL,   
+    idCategoria VARCHAR (12) NOT NULL,  
+    PRIMARY KEY (codIdProduto),
+    FOREIGN KEY (codIdFilial) REFERENCES filial(codIdFilial),
+    FOREIGN KEY (idMarca) REFERENCES marca (idMarca), 
+    FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria) 
+);
+
 CREATE TABLE item (
     idItem INT,
     quantidadeItens INT NOT NULL,
@@ -170,18 +184,4 @@ CREATE TABLE item (
     FOREIGN KEY (numOrdemDeCompra) REFERENCES ordemDeCompra(numOrdemDeCompra),
     FOREIGN KEY (numNotaFiscal) REFERENCES notafiscal (numNotaFiscal), 
     FOREIGN KEY (codIdProduto) REFERENCES produto (codIdProduto) 
-);
-
-CREATE TABLE produto (
-    codIdProduto INT,
-    nomeProduto VARCHAR(10) NOT NULL,
-    descricao VARCHAR(50) NOT NULL,
-    margemLucroMin NUMBER NOT NULL,
-    codIdFilial INT NOT NULL,
-    idMarca VARCHAR (12) NOT NULL,   
-    idCategoria VARCHAR (12) NOT NULL,  
-    PRIMARY KEY (idItem),
-    FOREIGN KEY (codIDFilial) REFERENCES filial(codIdFilial),
-    FOREIGN KEY (idMarca) REFERENCES marca (idMarca), 
-    FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria) 
 );
