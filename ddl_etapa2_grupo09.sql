@@ -33,7 +33,6 @@ CREATE TABLE cliente(
     bairro VARCHAR(50) NOT NULL,
     estado VARCHAR (20) NOT NULL,
     PRIMARY KEY (cpfCliente)
-
 );
 
 CREATE TABLE dependente(
@@ -43,17 +42,13 @@ CREATE TABLE dependente(
     matriculaDependente VARCHAR(20),
     PRIMARY KEY (cpfDependente),
     FOREIGN KEY (matriculaDependente) REFERENCES funcionario(matricula)
-    
-
-
 );
 
 
 CREATE TABLE telefoneFuncionario(
     matriculaFuncionario VARCHAR (20),
     numeroTelFuncionario VARCHAR(20),
-    PRIMARY KEY (matriculaFuncionario, numeroTelFuncionario)
- 
+    PRIMARY KEY (matriculaFuncionario, numeroTelFuncionario) 
 );
 
 CREATE TABLE marca(
@@ -85,12 +80,10 @@ CREATE TABLE equipamento (
     
 );
 
-
 CREATE TABLE telefoneCliente(
     cpfTelCliente VARCHAR (20),
     numeroTelCliente VARCHAR(20),
     PRIMARY KEY (cpfTelCliente, numeroTelCliente)
-
 );
 
 CREATE TABLE fornecedor(
@@ -110,4 +103,43 @@ CREATE TABLE telefoneFornecedor(
     numeroTelFornecedor VARCHAR(20),
     PRIMARY KEY (cnpjTelForncedor, numeroTelFornecedor)
 
+);
+
+CREATE TABLE ordemDeCompra(
+    numNotaFiscal VARCHAR(20),
+    dataEHotaVenda TIMESTAMP NOT NULL,
+    numCaixa INT NOT NULL,
+    cpfCliente CHAR(11) NOT NULL,
+    codIdFilial INT NOT NULL,
+    matFuncionario VARCHAR(20) NOT NULL,
+    PRIMARY KEY (numNotaFiscal),
+    FOREIGN KEY (numCaixa) REFERENCES caixa(numeroCaixa),
+    FOREIGN KEY (cpfCliente) REFERENCES cliente (cpfCliente),
+    FOREIGN KEY (codIdFilial) REFERENCES filial (codIdFilial),
+    FOREIGN KEY (matFuncionario) REFERENCES funcionario(matricula)
+);
+
+CREATE TABLE solicitacao(
+    idSolicitacao INT,
+    dataSolicitacao DATE NOT NULL,
+    dataPrevistaEntrega DATE NOT NULL,
+    dataEnrega DATE NOT NULL,
+    valorCompra NUMBER,
+    prazoPagamentoDia DATE,
+    codIDFilial INT,
+    cnpjFornecedor VARCHAR(20),
+    PRIMARY KEY (idSolicitacao),
+    FOREIGN KEY (codIDFilial) REFERENCES filial(codIdFilial),
+    FOREIGN KEY (cnpjFornecedor) REFERENCES fornecedor (cnpj)
+);
+
+CREATE TABLE notafiscal(
+    numNotaFiscal NUMBER,
+    cnpjNotaFiscal VARCHAR(20) NOT NULL,
+    quantidade INT,
+    dataNotaFiscal DATE NOT NULL,
+    valorPorItem NUMBER,
+    idNFSolicitacao INT NOT NULL,
+    PRIMARY KEY (numNotaFiscal),
+    FOREIGN KEY(idNFSolicitacao) REFERENCES solicitacao(idSolicitacao)
 );
