@@ -8,18 +8,16 @@ CREATE TABLE funcionario(
     matriculaSupervisor VARCHAR(20),
     PRIMARY KEY (matricula),
     FOREIGN KEY (matriculaSupervisor) REFERENCES funcionario(matricula)
-
 );
 
 CREATE TABLE  filial(
     codIdFilial INT,
-    nome VARCHAR(50) NOT NULL,
-    endereco  VARCHAR(100) NOT NULL,
-    telefone VARCHAR(20),
+    nomeFilial VARCHAR(50) NOT NULL,
+    enderecoFilial  VARCHAR(100) NOT NULL,
+    telefoneFilial VARCHAR(20),
     matriculaFuncionario VARCHAR(20),
     PRIMARY KEY(codIdFilial),
     FOREIGN KEY (matriculaFuncionario) REFERENCES funcionario(matricula)
-
 );
 
 CREATE TABLE cliente(
@@ -37,7 +35,7 @@ CREATE TABLE cliente(
 
 CREATE TABLE dependente(
     cpfDependente CHAR(11) NOT NULL,
-    nascimento DATE NOT NULL,
+    nascimentoDependente DATE NOT NULL,
     nomeDependente VARCHAR(50) NOT NULL,
     matriculaDependente VARCHAR(20),
     PRIMARY KEY (cpfDependente),
@@ -45,17 +43,20 @@ CREATE TABLE dependente(
 );
 
 CREATE TABLE realizaReclamacao (
-    cpfCliente CHAR(11),
-    codIdFilial INT,
+    cpfClienteReclamacao CHAR(11),
+    codIdFilialReclamacao INT,
     dataHoraReclamacao TIMESTAMP NOT NULL,
     descricao VARCHAR(200),
-    PRIMARY KEY (cpfCliente, codIdFilial) 
+    PRIMARY KEY (cpfClienteReclamacao, codIdFilialReclamacao),
+    FOREIGN KEY (cpfClienteReclamacao) REFERENCES cliente (cpfCliente),
+    FOREIGN KEY (codIdFilialReclamacao) REFERENCES filial (codIdFilial)
 );
 
 CREATE TABLE telefoneFuncionario(
     matriculaFuncionario VARCHAR (20),
     numeroTelFuncionario VARCHAR(20),
-    PRIMARY KEY (matriculaFuncionario, numeroTelFuncionario) 
+    PRIMARY KEY (matriculaFuncionario, numeroTelFuncionario),
+    FOREIGN KEY (matriculaFuncionario) REFERENCES funcionario(matricula)
 );
 
 CREATE TABLE marca(
@@ -75,7 +76,6 @@ CREATE TABLE caixa (
     codIdCaixa INT,
     PRIMARY KEY (numeroCaixa),
     FOREIGN KEY (codIdCaixa) REFERENCES filial(codIdFilial)
-    
 );
 
 CREATE TABLE equipamento (
@@ -83,8 +83,7 @@ CREATE TABLE equipamento (
     descricao VARCHAR (50) NOT NULL,
     numeroCaixaEquipamento INT NOT NULL,
     PRIMARY KEY (idEquipamento),
-    FOREIGN KEY (numeroCaixaEquipamento) REFERENCES caixa(numeroCaixa)
-    
+    FOREIGN KEY (numeroCaixaEquipamento) REFERENCES caixa(numeroCaixa)    
 );
 
 CREATE TABLE realizaManutencao (
@@ -92,13 +91,16 @@ CREATE TABLE realizaManutencao (
     matFuncionario VARCHAR(20),
     dataHoraManutencao TIMESTAMP NOT NULL,
     custo NUMBER NOT NULL,
-    PRIMARY KEY (idEquipamento, matFuncionario) 
+    PRIMARY KEY (idEquipamento, matFuncionario),
+    FOREIGN KEY (idEquipamento) REFERENCES equipamento (idEquipamento),
+    FOREIGN KEY (matFuncionario) REFERENCES funcionario (matricula)
 );
 
 CREATE TABLE telefoneCliente(
-    cpfTelCliente VARCHAR (20),
+    cpfTelCliente CHAR (11),
     numeroTelCliente VARCHAR(20),
-    PRIMARY KEY (cpfTelCliente, numeroTelCliente)
+    PRIMARY KEY (cpfTelCliente, numeroTelCliente),
+    FOREIGN KEY (cpfTelCliente) REFERENCES cliente(cpfCliente)
 );
 
 CREATE TABLE fornecedor(
@@ -110,27 +112,25 @@ CREATE TABLE fornecedor(
     idCategoriaFornecedor VARCHAR (12),
     PRIMARY KEY (cnpj),
     FOREIGN KEY (idCategoriaFornecedor) REFERENCES categoria(idCategoria)
-
 );
 
 CREATE TABLE telefoneFornecedor(
     cnpjTelForncedor VARCHAR (20),
     numeroTelFornecedor VARCHAR(20),
     PRIMARY KEY (cnpjTelForncedor, numeroTelFornecedor)
-
 );
 
 CREATE TABLE ordemDeCompra(
-    numOrdemDeCompra VARCHAR(20),
+    numOrdemDeCompra INT,
     dataEHotaVenda TIMESTAMP NOT NULL,
     numCaixa INT NOT NULL,
-    cpfCliente CHAR(11) NOT NULL,
-    codIdFilial INT NOT NULL,
+    cpfClienteCompra CHAR(11) NOT NULL,
+    codIdFilialCompra INT NOT NULL,
     matFuncionario VARCHAR(20) NOT NULL,
     PRIMARY KEY (numOrdemDeCompra),
     FOREIGN KEY (numCaixa) REFERENCES caixa(numeroCaixa),
-    FOREIGN KEY (cpfCliente) REFERENCES cliente (cpfCliente),
-    FOREIGN KEY (codIdFilial) REFERENCES filial (codIdFilial),
+    FOREIGN KEY (cpfClienteCompra) REFERENCES cliente (cpfCliente),
+    FOREIGN KEY (codIdFilialCompra) REFERENCES filial (codIdFilial),
     FOREIGN KEY (matFuncionario) REFERENCES funcionario(matricula)
 );
 
@@ -149,7 +149,7 @@ CREATE TABLE solicitacao(
 );
 
 CREATE TABLE notafiscal(
-    numNotaFiscal VARCHAR(20),
+    numNotaFiscal INT,
     cnpjNotaFiscal VARCHAR(20) NOT NULL,
     quantidade INT,
     dataNotaFiscal DATE NOT NULL,
@@ -164,24 +164,26 @@ CREATE TABLE produto (
     nomeProduto VARCHAR(10) NOT NULL,
     descricao VARCHAR(50) NOT NULL,
     margemLucroMin NUMBER NOT NULL,
-    codIdFilial INT NOT NULL,
-    idMarca VARCHAR (12) NOT NULL,   
-    idCategoria VARCHAR (12) NOT NULL,  
+    codIdFilialProduto INT NOT NULL,
+    idMarcaProduto VARCHAR (12) NOT NULL,   
+    idCategoriaProduto VARCHAR (12) NOT NULL,  
     PRIMARY KEY (codIdProduto),
-    FOREIGN KEY (codIdFilial) REFERENCES filial(codIdFilial),
-    FOREIGN KEY (idMarca) REFERENCES marca (idMarca), 
-    FOREIGN KEY (idCategoria) REFERENCES categoria (idCategoria) 
+    FOREIGN KEY (codIdFilialProduto) REFERENCES filial(codIdFilial),
+    FOREIGN KEY (idMarcaProduto) REFERENCES marca (idMarca), 
+    FOREIGN KEY (idCategoriaProduto) REFERENCES categoria (idCategoria) 
 );
 
 CREATE TABLE item (
     idItem INT,
     quantidadeItens INT NOT NULL,
     desconto NUMBER,
-    numOrdemDeCompra VARCHAR(20) NOT NULL,
-    numNotaFiscal VARCHAR(20) NOT NULL,
-    codIdProduto INT NOT NULL,    
+    numOrdemDeCompraItem INT NOT NULL,
+    numNotaFiscalItem INT NOT NULL,
+    codIdProdutoItem INT NOT NULL,    
     PRIMARY KEY (idItem),
-    FOREIGN KEY (numOrdemDeCompra) REFERENCES ordemDeCompra(numOrdemDeCompra),
-    FOREIGN KEY (numNotaFiscal) REFERENCES notafiscal (numNotaFiscal), 
-    FOREIGN KEY (codIdProduto) REFERENCES produto (codIdProduto) 
+    FOREIGN KEY (numOrdemDeCompraItem) REFERENCES ordemDeCompra(numOrdemDeCompra),
+    FOREIGN KEY (numNotaFiscalItem) REFERENCES notafiscal (numNotaFiscal), 
+    FOREIGN KEY (codIdProdutoItem) REFERENCES produto (codIdProduto) 
 );
+
+
