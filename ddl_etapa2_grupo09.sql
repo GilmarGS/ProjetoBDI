@@ -7,7 +7,7 @@ CREATE TABLE funcionario(
     funcao VARCHAR(20) NOT NULL,
     matriculaSupervisor VARCHAR(20),
     PRIMARY KEY (matricula),
-    FOREIGN KEY (matriculaSupervisor) REFERENCES funcionario(matricula)
+    FOREIGN KEY (matriculaSupervisor) REFERENCES funcionario(matricula) INITIALLY DEFERRED DEFERRABLE
 );
 
 CREATE TABLE  filial(
