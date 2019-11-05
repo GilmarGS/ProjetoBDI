@@ -115,9 +115,10 @@ CREATE TABLE fornecedor(
 );
 
 CREATE TABLE telefoneFornecedor(
-    cnpjTelForncedor VARCHAR (20),
+    cnpjFornecedor VARCHAR (20),
     numeroTelFornecedor VARCHAR(20),
-    PRIMARY KEY (cnpjTelForncedor, numeroTelFornecedor)
+    PRIMARY KEY (cnpjFornecedor, numeroTelFornecedor),
+    FOREIGN KEY (cnpjFornecedor) REFERENCES fornecedor(cnpj)
 );
 
 CREATE TABLE ordemDeCompra(
@@ -176,6 +177,7 @@ CREATE TABLE produto (
 CREATE TABLE item (
     idItem INT,
     quantidadeItens INT NOT NULL,
+    preco FLOAT NOT NULL,
     desconto NUMBER,
     numOrdemDeCompraItem INT NOT NULL,
     numNotaFiscalItem INT NOT NULL,
