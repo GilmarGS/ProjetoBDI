@@ -186,4 +186,5 @@ CREATE TABLE item (
     FOREIGN KEY (codIdProdutoItem) REFERENCES produto (codIdProduto) 
 );
 
-
+ALTER TABLE funcionario ADD idFilial INT;
+ALTER TABLE funcionario ADD CONSTRAINT refFilial FOREIGN KEY (idFilial) REFERENCES filial(codIdFilial);
