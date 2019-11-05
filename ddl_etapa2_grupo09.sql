@@ -1,6 +1,7 @@
 CREATE TABLE funcionario(
     matricula VARCHAR(20),
     cpfFuncionario CHAR(11) NOT NULL,
+    identidade CHAR(7) NOT NULL,
     nomeFuncionario VARCHAR(50) NOT NULL,
     enderecoFuncionario VARCHAR(50) NOT NULL,
     salario FLOAT NOT NULL,
@@ -37,9 +38,9 @@ CREATE TABLE dependente(
     cpfDependente CHAR(11) NOT NULL,
     nascimentoDependente DATE NOT NULL,
     nomeDependente VARCHAR(50) NOT NULL,
-    matriculaDependente VARCHAR(20),
+    matriculaFuncionario VARCHAR(20),
     PRIMARY KEY (cpfDependente),
-    FOREIGN KEY (matriculaDependente) REFERENCES funcionario(matricula)
+    FOREIGN KEY (matriculaFuncionario) REFERENCES funcionario(matricula)
 );
 
 CREATE TABLE realizaReclamacao (
@@ -73,9 +74,9 @@ CREATE TABLE categoria(
 
 CREATE TABLE caixa (
     numeroCaixa INT,
-    codIdCaixa INT,
+    idFilial INT,
     PRIMARY KEY (numeroCaixa),
-    FOREIGN KEY (codIdCaixa) REFERENCES filial(codIdFilial)
+    FOREIGN KEY (idFilial) REFERENCES filial(codIdFilial)
 );
 
 CREATE TABLE equipamento (
@@ -139,7 +140,7 @@ CREATE TABLE solicitacao(
     idSolicitacao INT,
     dataSolicitacao DATE NOT NULL,
     dataPrevistaEntrega DATE NOT NULL,
-    dataEnrega DATE NOT NULL,
+    dataEntrega DATE NOT NULL,
     valorCompra NUMBER,
     prazoPagamentoDia DATE,
     codIDFilial INT,
