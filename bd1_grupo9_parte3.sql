@@ -386,15 +386,15 @@ FROM PRODUTO p, CATEGORIA c, MARCA m
 WHERE c.nome = "Jardim" AND m.nome= "SempreVerde"
     (SELECT p. margem_lucro
     FROM PRODUTO p
-    WHERE max(p.margem_lucro));
+    WHERE MAX(p.margem_lucro));
 
 --7
 
 --8 Consulta rodando - Falta testar com dados
 
-create view ListaFiliais AS
-SELECT f.nome as nomeF, i.nome
-from FUNCIONARIO f, FILIAL i
+CREATE VIEW ListaFiliais AS
+SELECT f.nome AS nomeF, i.nome
+FROM FUNCIONARIO f, FILIAL i
 WHERE f.matricula = i.gerente
          
 --9 Consulta rodando - Falta testar com dados
@@ -402,7 +402,7 @@ WHERE f.matricula = i.gerente
 SELECT c.numero_caixa
 FROM CAIXA c, REALIZA_MANUTENCAO r, EQUIPAMENTO e
 WHERE c.numero_caixa = e.numero_caixa AND e.identificador = r.identificador_equipamento
-    AND (SELECT count(*)
+    AND (SELECT COUNT(*)
          FROM  REALIZA_MANUTENCAO r, EQUIPAMENTO e
          WHERE e.identificador = r.identificador_equipamento) < 2
          
@@ -413,7 +413,7 @@ WHERE c.numero_caixa = e.numero_caixa AND e.identificador = r.identificador_equi
 
 SELECT r.data_hora
 FROM REALIZA_MANUTENCAO r, FUNCIONARIO f
-WHERE (r.matricula_funcionario = f.matricula AND f.nome LIKE '%Pereira%') AND (f.funcao = 'padeiro')
+WHERE ((r.matricula_funcionario = f.matricula) AND (f.nome LIKE '%Pereira%') AND (f.funcao = 'padeiro'))
 
 -- 12 Consulta não está rodando, ir consertando
 
@@ -489,20 +489,23 @@ END;
 --19 Consulta não está rodando, ir consertando
 
 CREATE OR REPLACE PROCEDURE calculaComprasNoPeriodo
-    (data_hora1 IN ORDEM_COMPRA.data_hora%TYPE, 
-     data_hora2 IN ORDEM_COMPRA.data_hora%TYPE,
-     total_compras OUT NUMBER) 
+    (primeira_data_hora IN ORDEM_COMPRA.data_hora%TYPE, 
+    segunda_data_hora IN ORDEM_COMPRA.data_hora%TYPE, 
+    total_compras OUT NUMBER)
 AS
 BEGIN
-   -- WITH total_compras AS(
-   SELECT SUM(i.preco_produto * i.quantidade) 
-   FROM ITEM i, ORDEM_COMPRA o
-   WHERE ((i.num_nota_fiscal_ordem = o.numero_nota_fiscal) AND (o.data_hora1 BETWEEN o.data_hora1 AND o.data_hora2))
-   
-   DBMS_OUTPUT.PUT_LINE('O total de vendas no período informado é de '|| TO_CHAR(total_compras));
+    total_compras:= TO_CHAR(
+    SELECT SUM(i.preco_produto * i.quantidade)
+    FROM ITEM i, ORDEM_COMPRA o
+    WHERE ((i.num_nota_fiscal_ordem = o.numero_nota_fiscal) AND (o.data_hora BETWEEN o.primeira_data_hora AND o.segunda_data_hora)));
+    
+    DBMS_OUTPUT.PUT_LINE('O valor total de compras é'||TO_CHAR(total_compras));
+    
+COMMIT;
 END;
 
 --A tabela de ITEM possui chave estrangeira de ORDEM_COMPRA, além do preço do produto e quantidade. De posse das ordens de compra, basta calcular o preço e quantidade para cada ordem e somar. (Palavras de Thiago kk)
+
      
 --20 Consulta rodando - Falta testar com dados( Ver com Thiago se são essas tabelas que presisam ser usadas, não fica muito claro)
      
