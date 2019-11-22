@@ -474,7 +474,15 @@ END;
      
 
      
---17
+--17 Consulta rodando, REVISAR A LÓGICA - Falta testar com dados
+
+CREATE TRIGGER TRI_SalarioFuncionario_SalarioGerente
+BEFORE INSERT OR UPDATE OF salario ON FUNCIONARIO
+FOR EACH ROW
+WHEN  (((NEW.salario>OLD.salario) AND (NEW.funcao != 'gerente')) AND ((NEW.salario<OLD.salario) AND (NEW.funcao = 'gerente')))
+BEGIN
+    RAISE_APPLICATION_ERROR(-20003, 'Valor salarial não permitido');
+END;
      
 --18  Consulta rodando - Falta testar com dados
      
