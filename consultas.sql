@@ -26,11 +26,11 @@ SELECT c.nome AS nomeCliente, c.cpf, f.nome
 FROM CLIENTE c, FILIAL f, ORDEM_COMPRA o
 WHERE c.cpf = o.cpf_cliente AND f.codigo_identificacao = o.codigo_filial
 
--- 4 Consulta rodando - Falta testar com dados
+-- 4 Consulta consertada rodando - TESTADA OK
 
-SELECT f.*
-FROM FUNCIONARIO f
-WHERE f.matricula = f.matricula_supervisor
+SELECT DISTINCT f.*
+FROM FUNCIONARIO f, FUNCIONARIO s
+WHERE f.matricula = s.matricula_supervisor
     ORDER BY f.salario DESC;
 
 -- 5 Consulta rodando - Falta testar com dados
