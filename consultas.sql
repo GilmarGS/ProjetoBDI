@@ -67,21 +67,22 @@ SELECT f.nome AS nomeF, i.nome
 FROM FUNCIONARIO f, FILIAL i
 WHERE f.matricula = i.gerente
          
---9 Consulta rodando - Falta testar com dados
+--9 Consulta rodando - TESTADA OK
 
-SELECT c.numero_caixa
+SELECT DISTINCT c.numero_caixa
 FROM CAIXA c, REALIZA_MANUTENCAO r, EQUIPAMENTO e
-WHERE c.numero_caixa = e.numero_caixa AND e.identificador = r.identificador_equipamento
-    AND (SELECT COUNT(*)
-         FROM  REALIZA_MANUTENCAO r, EQUIPAMENTO e
-         WHERE e.identificador = r.identificador_equipamento) < 2
+WHERE c.numero_caixa = e.numero_caixa AND
+e.identificador = r.identificador_equipamento
+GROUP BY c.numero_caixa, r.identificador_equipamento
+HAVING COUNT(*) <= 1
+
          
 --10
 
 
---11 Consulta rodando - Falta testar com dados
+--11 Consulta rodando - TESTADA OK
 
-SELECT r.data_hora
+SELECT r.*
 FROM REALIZA_MANUTENCAO r, FUNCIONARIO f
 WHERE ((r.matricula_funcionario = f.matricula) AND (f.nome LIKE '%Pereira%') AND (f.funcao = 'padeiro'))
 
