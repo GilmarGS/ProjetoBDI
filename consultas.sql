@@ -101,19 +101,15 @@ SELECT r.*
 FROM REALIZA_MANUTENCAO r, FUNCIONARIO f
 WHERE ((r.matricula_funcionario = f.matricula) AND (f.nome LIKE '%Pereira%') AND (f.funcao = 'padeiro'))
 
--- 12 Consulta não está rodando, ir consertando
+-- 12 Consulta rodando, TESTADA OK
 
-SELECT d.nome
-FROM FUNCIONARIO f, DEPENDENTE d
-WHERE (f.matricula_supervisor = d.matricula_funcionario) AND 
-    (SELECT *
-    FROM DEPENDENTE d
-    WHERE (TIMESTAMPDIFF(YEAR,d.data_nasc,CURDATE()) >= 18)
-     
-     
--- ( ESSE SELECT TRUNC VIMOS NA INTERNET QUE PODE AJUDAR)     
---SELECT trunc((months_between(sysdate, to_date(d.data_nasc,'dd/mm/yyyy')))/12) AS idade
---FROM DEPENDENTE d
+SELECT f.nome AS supervisor, d.nome AS nome_dependentes_mais_de_18
+FROM FUNCIONARIO f, FUNCIONARIO s, DEPENDENTE d
+WHERE f.matricula = s.matricula_supervisor AND 
+d.matricula_funcionario = f.matricula AND 
+d.cpf in (SELECT cpf
+          FROM DEPENDENTE d 
+          WHERE trunc(to_char(sysdate - d.data_nasc)/365) >= 18)      
 
      
 --13 Consulta não está rodando, ir consertando
