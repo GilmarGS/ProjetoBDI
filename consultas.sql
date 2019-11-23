@@ -33,7 +33,7 @@ FROM FUNCIONARIO f, FUNCIONARIO s
 WHERE f.matricula = s.matricula_supervisor
     ORDER BY f.salario DESC;
 
--- 5 Consulta rodando - Falta testar com dados
+-- 5 Consulta rodando - TESTADA OK
 
 SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p
