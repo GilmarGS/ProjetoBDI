@@ -60,7 +60,7 @@ AND m.nome = 'SempreVerde'
 
 --7
 
---8 Consulta rodando - Falta testar com dados
+--8 Consulta rodando - TESTADA OK
 
 CREATE VIEW ListaFiliais AS
 SELECT f.nome AS nomeF, i.nome
