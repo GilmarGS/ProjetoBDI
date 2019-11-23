@@ -41,10 +41,10 @@ WHERE preco_venda < 100;
 
 SELECT p.codigo_identificao, p.nome
 FROM PRODUTO p
-WHERE(SELECT  MAX(p.margem_lucro)
-      FROM PRODUTO p, CATEGORIA c, MARCA m
-      WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
-           AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
+WHERE p.magem_lucro(SELECT  MAX(p.margem_lucro)
+                    FROM PRODUTO p, CATEGORIA c, MARCA m
+                    WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
+                    AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
 
 --7
 
