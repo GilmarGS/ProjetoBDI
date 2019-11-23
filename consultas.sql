@@ -112,19 +112,13 @@ d.cpf in (SELECT cpf
           WHERE trunc(to_char(sysdate - d.data_nasc)/365) >= 18)      
 
      
---13 Consulta não está rodando, ir consertando
+--13 Consulta rodando, TESTADA OK
     
-CREATE VIEW list As
-(
-SELECT p.*
-FROM PRODUTO p, CATEGORIA c
-WHERE p.id_categoria = c.identificador AND c.nome= 'Limpeza' 
-
-UNION 
-SELECT SUM(valor_total)
-       FROM (SELECT p.quantidade, p.preco_compra, (p.quantidade*p.preco_compra) as valor_total
-             from produto p)
-       FROM Produto p)
+CREATE VIEW lista AS (
+    SELECT p.*
+    FROM PRODUTO p, CATEGORIA c
+    WHERE p.id_categoria = c.identificador AND c.nome= 'Limpeza' AND
+    p.quantidade*p.preco_compra > 200)
      
 --14 Consulta não está rodando, ir consertando
      
