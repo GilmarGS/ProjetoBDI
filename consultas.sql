@@ -48,6 +48,16 @@ WHERE p.magem_lucro(SELECT  MAX(p.margem_lucro)
                     WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
                     AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
 
+-- 6 alternativa? rodando e testada
+SELECT p.codigo_identificacao, p.nome
+FROM PRODUTO p, CATEGORIA c, MARCA m
+WHERE p.margem_lucro in (SELECT  MAX(p.margem_lucro)
+                    FROM PRODUTO p, CATEGORIA c
+                    WHERE p.id_categoria = c.identificador)
+AND c.nome = 'Jardim'
+AND p.id_marca = m.identificador 
+AND m.nome = 'SempreVerde'
+
 --7
 
 --8 Consulta rodando - Falta testar com dados
