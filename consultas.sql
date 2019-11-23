@@ -58,8 +58,23 @@ AND c.nome = 'Jardim'
 AND p.id_marca = m.identificador 
 AND m.nome = 'SempreVerde'
 
---7
+--7 Consulta rodando - TESTADA OK
 
+SELECT f.nome AS nome_funcionario, d.nome AS nome_dependentes
+FROM DEPENDENTE d, FUNCIONARIO f
+WHERE d.matricula_funcionario = f.matricula AND
+d.matricula_funcionario = (SELECT matricula_funcionario
+                           FROM(SELECT d.matricula_funcionario, COUNT(d.matricula_funcionario) AS quantidade_dependentes
+                                FROM FUNCIONARIO f, DEPENDENTE d
+                                WHERE  f.matricula = d.matricula_funcionario
+                                GROUP BY d.matricula_funcionario)
+                           WHERE quantidade_dependentes = (SELECT MAX(quantidade_dependentes)
+                                                           FROM(SELECT d.matricula_funcionario, COUNT(d.matricula_funcionario) AS quantidade_dependentes
+                                                                FROM FUNCIONARIO f, DEPENDENTE d
+                                                                WHERE  f.matricula = d.matricula_funcionario
+                                                                GROUP BY d.matricula_funcionario)))
+ 
+ 
 --8 Consulta rodando - TESTADA OK
 
 CREATE VIEW ListaFiliais AS
