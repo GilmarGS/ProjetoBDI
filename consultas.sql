@@ -1,16 +1,6 @@
 -- Consultas Etapa 3
 
 
--- 1 Consulta rodando - Falta testar com dados
-
-SELECT c.*
-FROM CLIENTE c, FILIAL f, REALIZA_RECLAMACAO r
-WHERE (r.codigo_filial = f.codigo_identificacao 
-       AND f.nome = 'Campina'
-       AND (SELECT count(*)
-           FROM RECALIZA_RECLAMACAO r, CLIENTE c
-           WHERE r.cpf_cliente = c.cpf)>1)
-
 -- Consulta 1 consertada e testada com dados
 
 SELECT *
