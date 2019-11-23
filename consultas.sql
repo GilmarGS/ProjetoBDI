@@ -19,7 +19,7 @@ SELECT MAX(i.quantidade)
 FROM ITEM i
 WHERE i.desconto BETWEEN 0.05 AND 0.10
 
--- 3 Consulta rodando - Falta testar com dados
+-- 3 Consulta rodando - TESTADA OK
 
 CREATE VIEW ListaCompras AS
 SELECT c.nome AS nomeCliente, c.cpf, f.nome
