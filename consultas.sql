@@ -10,7 +10,19 @@ WHERE (r.codigo_filial = f.codigo_identificacao
        AND (SELECT count(*)
            FROM RECALIZA_RECLAMACAO r, CLIENTE c
            WHERE r.cpf_cliente = c.cpf)>1)
-           
+
+-- Consulta 1 consertada e testada com dados
+
+SELECT *
+FROM CLIENTE 
+WHERE cpf in (SELECT cpf
+              FROM REALIZA_RECLAMACAO r, CLIENTE c, FILIAL f
+              WHERE r.cpf_cliente = c.cpf AND 
+              f.codigo_identificacao = r.codigo_filial AND
+              f.nome = 'Campina'
+              GROUP BY cpf_cliente
+              HAVING COUNT(*) > 1) 
+
 -- 2 Consulta rodando - TESTADA OK
 
 SELECT MAX(i.quantidade)
