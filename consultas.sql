@@ -40,11 +40,11 @@ WHERE preco_venda < 100;
 -- 6 Consulta não está rodando, ir consertando
 
 SELECT p.codigo_identificao, p.nome
-FROM PRODUTO p, CATEGORIA c, MARCA m
-WHERE c.nome = "Jardim" AND m.nome= "SempreVerde"
-    (SELECT p. margem_lucro
-    FROM PRODUTO p
-    WHERE MAX(p.margem_lucro));
+FROM PRODUTO p
+WHERE(SELECT  MAX(p.margem_lucro)
+      FROM PRODUTO p, CATEGORIA c, MARCA m
+      WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
+           AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
 
 --7
 
