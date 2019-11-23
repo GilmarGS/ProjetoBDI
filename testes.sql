@@ -33,6 +33,9 @@ INSERT INTO dependente VALUES('22222222224', '03/03/2009', 'Carla',1144444);
 INSERT INTO dependente VALUES('22222222225', '03/03/2005', 'Anderson',1144444);
 INSERT INTO dependente VALUES('22222222234', '03/03/2018', 'Renata',115555);
 INSERT INTO dependente VALUES('22222222235', '03/03/1998', 'Ingrid',115555);
+INSERT INTO dependente VALUES('22222222236', '03/03/1998', 'Carlos',19444);
+INSERT INTO dependente VALUES('22222222239', '03/03/2004', 'regis',19444);
+
 
 
 INSERT INTO realiza_reclamacao VALUES(01, CURRENT_TIMESTAMP, 'muito ruim', 001, '11055588855');
@@ -51,6 +54,8 @@ INSERT INTO marca VALUES(3233, 'SempreVerde');
 
 INSERT INTO categoria VALUES(44, 'Roupa');
 INSERT INTO categoria VALUES(46, 'Jardim');
+INSERT INTO categoria VALUES(47, 'Limpeza');
+
 
 INSERT INTO caixa VALUES(0001, 001);
 INSERT INTO caixa VALUES(0002, 001);
@@ -86,6 +91,8 @@ INSERT INTO produto VALUES(03, 'rexona', 'desodorante', 0.50, 001, 2, 40.1, 55.0
 INSERT INTO produto VALUES(04, 'aaaa', 'peixe', 0.50, 001, 2, 45.1, 55.0, '03/03/2011', '05/06/12', 3233, 46);
 INSERT INTO produto VALUES(05, 'bbbb', 'peixe', 0.50, 001, 2, 40.1, 55.0, '03/03/2011', '05/06/12', 3233, 46);
 INSERT INTO produto VALUES(06, 'bbbb', 'peixe', 0.60, 001, 2, 40.1, 55.0, '03/03/2011', '05/06/12', 3233, 46);
+INSERT INTO produto VALUES(07, 'gorgonzola', 'queijo', 0.60, 001, 2, 201.1, 55.0, '03/03/2011', '05/06/12', 3233, 47);
+INSERT INTO produto VALUES(08, 'coalho', 'queijo', 0.60, 001, 1, 100.0, 55.0, '03/03/2011', '05/06/12', 3233, 47);
 
 
 INSERT INTO item VALUES(111, 2, 02, 100, 0.10, 0.2);
