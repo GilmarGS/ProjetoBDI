@@ -40,16 +40,8 @@ FROM(SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p
 WHERE preco_venda * quantidade < 100)
 
--- 6 Consulta não está rodando, ir consertando
+-- 6 consulta rodando - TESTADA OK
 
-SELECT p.codigo_identificacao, p.nome
-FROM PRODUTO p
-WHERE p.margem_lucro = (SELECT MAX(p.margem_lucro)
-                    FROM PRODUTO p, CATEGORIA c, MARCA m
-                    WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
-                    AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
-
--- 6 alternativa? rodando e testada
 SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p, CATEGORIA c, MARCA m
 WHERE p.margem_lucro in (SELECT  MAX(p.margem_lucro)
@@ -134,7 +126,7 @@ WHERE n.identificador_solicitacao =s.identificador AND (n.data,year) = 2019 AND
               HAVING s.cnpj_fornecedor = a.cnpj_fornecedor)
      
      
--- 15 Consulta rodando - Falta testar com dados
+-- 15 Consulta rodando - TESTADA OK
      
 ALTER TABLE FORNECEDOR
 ADD CONSTRAINT cnpj_fo
@@ -162,7 +154,7 @@ BEGIN
     RAISE_APPLICATION_ERROR(-20003, 'Valor salarial não permitido');
 END;
      
---18  Consulta rodando - Falta testar com dados
+--18  Consulta rodando - TESTADA OK
      
 CREATE TRIGGER TRI_DataCompra_DataValidade
 BEFORE INSERT OR UPDATE OF data_compra, data_validade ON PRODUTO
@@ -193,7 +185,7 @@ END;
 --A tabela de ITEM possui chave estrangeira de ORDEM_COMPRA, além do preço do produto e quantidade. De posse das ordens de compra, basta calcular o preço e quantidade para cada ordem e somar. (Palavras de Thiago kk)
 
      
---20 Consulta rodando - Falta testar com dados( Ver com Thiago se são essas tabelas que presisam ser usadas, não fica muito claro)
+--20 Consulta rodando - TESTADA OK
      
 CREATE OR REPLACE PROCEDURE alteraPrecoDeVenda
     (p_codigo_identificacao IN PRODUTO.codigo_identificacao%TYPE, 
