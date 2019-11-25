@@ -56,6 +56,7 @@ WHERE p.margem_lucro in (SELECT  MAX(p.margem_lucro)
                     FROM PRODUTO p, CATEGORIA c
                     WHERE p.id_categoria = c.identificador)
 AND c.nome = 'Jardim'
+AND p.id_categoria = c.identificador
 AND p.id_marca = m.identificador 
 AND m.nome = 'SempreVerde'
 
