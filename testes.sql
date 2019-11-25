@@ -4,8 +4,8 @@ INSERT INTO funcionario VALUES(19454, '11111111117', '7456321', 'kedson', 'RUA T
 INSERT INTO funcionario VALUES(19999, '11111111117', '7456321', 'jose', 'RUA TAL', 220.3, 'RH', NULL, NULL);
 INSERT INTO funcionario VALUES(18888, '11111145757', '7456321', 'raquel', 'RUA TAL', 199.3, 'RH', 19999, NULL);
 
-INSERT INTO funcionario VALUES(1144444, '22222222222', '7777777', 'PAULO', 'RUA TAL', 211.3, 'RH', NULL, NULL);
-INSERT INTO funcionario VALUES(115555, '11111111111', '7456321', 'ANA', 'RUA TAL', 111.3, 'RH', 1144444, NULL);
+INSERT INTO funcionario VALUES(1144444, '22222222222', '7777777', 'PAULO', 'RUA TAL', 211.3, 'RH', NULL, NULL); 
+INSERT INTO funcionario VALUES(115555, '11111111111', '7456321', 'ANA', 'RUA TAL', 212.3, 'RH', 1144444, NULL); 
 INSERT INTO funcionario VALUES(115544, '11111111112', '7456321', 'joao', 'RUA TAL', 111.33, 'RH', 1144444, NULL);
 INSERT INTO funcionario VALUES(115577, '11111111113', '7456321', 'neco', 'RUA TAL', 11.33, 'RH', 1144444, NULL);
 INSERT INTO funcionario VALUES(115533, '11111111114', '7456321', 'pedro', 'RUA TAL', 11.3, 'RH', 1144444, NULL);
@@ -77,17 +77,19 @@ INSERT INTO realiza_manutencao VALUES(0005, 1111, 0001, 115533, CURRENT_TIMESTAM
 
 INSERT INTO telefone_cliente VALUES('1111-11111', '11055588855');
 
-INSERT INTO fornecedor VALUES('111.222.222-22', 'rapoza', 'rua tal, cidade tal, estado tal', 'fornecedor@gmail', 44, 'www.fornecedor.com');
+INSERT INTO fornecedor VALUES('11.222.222/2222-22', 'rapoza', 'rua tal, cidade tal, estado tal', 'fornecedor@gmail', 44, 'www.fornecedor.com');
+INSERT INTO fornecedor VALUES('11.222.222/2222-11', 'aguaCg', 'rua tal, cidade tal, estado tal', 'fornecedor2@gmail', 46, 'www.fornecedor2.com');
 
-INSERT INTO telefone_fornecedor VALUES('1111-11111', '111.222.222-22');
+INSERT INTO telefone_fornecedor VALUES('1111-11111', '11.222.222/2222-22');
 
 INSERT INTO ordem_compra VALUES(2, CURRENT_TIMESTAMP, '11055588855', 001, 1144444, 0001); 
 INSERT INTO ordem_compra VALUES(3, CURRENT_TIMESTAMP, '15055588855', 002, 115533, 0002); 
 
-INSERT INTO solicitacao VALUES(4, '03/03/2004', '03/03/2004', '03/03/2004', 5.00, '03/03/2004', 001, '111.222.222-22');
-INSERT INTO solicitacao VALUES(5, '03/03/2004', '02/02/2004', '03/03/2004', 5.00, '03/03/2004', 002, '111.222.222-22');
+INSERT INTO solicitacao VALUES(4, '03/03/2019', '03/03/2019', '03/03/2019', 5000, '03/03/2019', 001, '11.222.222/2222-22');
+INSERT INTO solicitacao VALUES(5, '03/03/2019', '02/02/2019', '03/03/2019', 5, '03/03/2019', 002, '11.222.222/2222-11');
 
-INSERT INTO nota_fiscal VALUES(02, '11-222-000', 10, '03/03/2004', 500.0, 4); 
+INSERT INTO nota_fiscal VALUES(02, '11.222.222/2222-22', 10, '03/03/2004', 500.0, 4); 
+INSERT INTO nota_fiscal VALUES(03, '11.222.222/2222-11', 1, '03/03/2004', 5.0, 5); 
 
 INSERT INTO produto VALUES(01, 'cristal', 'agua mineral', 0.50, 001, 2, 155.1, 200.0, '03/03/2011', '05/06/12', 3232, 44);
 INSERT INTO produto VALUES(02, 'reizinho', 'pipoca', 0.50, 001, 2, 80.1, 100.0, '03/03/2011', '05/06/12', 3232, 44);
@@ -97,8 +99,12 @@ INSERT INTO produto VALUES(05, 'bbbb', 'peixe', 0.50, 001, 2, 40.1, 55.0, '03/03
 INSERT INTO produto VALUES(06, 'cccc', 'peixe', 0.60, 001, 2, 40.1, 55.0, '03/03/2011', '05/06/12', 3233, 46);
 INSERT INTO produto VALUES(07, 'gorgonzola', 'queijo', 0.60, 001, 2, 201.1, 55.0, '03/03/2011', '05/06/12', 3233, 47);
 INSERT INTO produto VALUES(08, 'coalho', 'queijo', 0.60, 001, 1, 100.0, 55.0, '03/03/2011', '05/06/12', 3233, 47);
+INSERT INTO produto VALUES(09, 'coalho', 'queijo', 0.60, 001, 1, 100.0, 55.0, '06/06/2012', '05/06/12', 3233, 47);
 
 
 INSERT INTO item VALUES(111, 2, 02, 100, 0.10, 0.2, 00001);
 INSERT INTO item VALUES(112, 2, 02, 100, 0.10, 0.07, 00002);
 INSERT INTO item VALUES(113, 2, 02, 200, 0.10, 0.07, 00003);
+
+
+UPDATE produto SET preco_compra  = 10 WHERE codigo_identificacao = 09;
