@@ -35,9 +35,10 @@ WHERE f.matricula = s.matricula_supervisor
 
 -- 5 Consulta rodando - TESTADA OK
 
-SELECT p.codigo_identificacao, p.nome
+SELECT COUNT (*) AS quantidade_produtos
+FROM(SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p
-WHERE preco_venda < 100;
+WHERE preco_venda * quantidade < 100)
 
 -- 6 Consulta não está rodando, ir consertando
 
