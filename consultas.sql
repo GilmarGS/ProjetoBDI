@@ -41,9 +41,9 @@ WHERE preco_venda < 100;
 
 -- 6 Consulta não está rodando, ir consertando
 
-SELECT p.codigo_identificao, p.nome
+SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p
-WHERE p.magem_lucro(SELECT  MAX(p.margem_lucro)
+WHERE p.margem_lucro = (SELECT MAX(p.margem_lucro)
                     FROM PRODUTO p, CATEGORIA c, MARCA m
                     WHERE p.id_categoria = c.identificador  AND c.nome = 'Jardim'
                     AND p.id_marca = m.identificador AND m.nome = 'SempreVerde')
@@ -99,7 +99,7 @@ HAVING COUNT(*) <= 1
 
 SELECT r.*
 FROM REALIZA_MANUTENCAO r, FUNCIONARIO f
-WHERE ((r.matricula_funcionario = f.matricula) AND (f.nome LIKE '%Pereira%') AND (f.funcao = 'padeiro'))
+WHERE ((r.matricula_funcionario = f.matricula) AND (f.nome LIKE '%Pereira%' AND f.funcao = 'padeiro'))
 
 -- 12 Consulta rodando, TESTADA OK
 
@@ -138,7 +138,7 @@ ALTER TABLE FORNECEDOR
 ADD CONSTRAINT cnpj_fo
 CHECK(REGEXP_LIKE(cnpj,'^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$'))
      
---16 Consulta rodando, REVISAR A LÓGICA - Falta testar com dados
+--16 Consulta rodando - TESTADA OK
      
 CREATE TRIGGER TRI_DataPrevistaMenor_DataSolitacao
 BEFORE INSERT OR UPDATE OF data_solicitacao, data_prevista ON SOLICITACAO
@@ -203,5 +203,3 @@ BEGIN
      WHERE codigo_identificacao = p_codigo_identificacao;
      COMMIT;
 END;
-     
-
