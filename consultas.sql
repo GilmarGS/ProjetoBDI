@@ -35,10 +35,9 @@ WHERE f.matricula = s.matricula_supervisor
 
 -- 5 Consulta rodando - TESTADA OK
 
-SELECT COUNT (*) AS quantidade_produtos
-FROM(SELECT p.codigo_identificacao, p.nome
+SELECT p.codigo_identificacao, p.nome
 FROM PRODUTO p
-WHERE preco_venda * quantidade < 100)
+WHERE (preco_venda * quantidade) < 100
 
 -- 6 consulta rodando - TESTADA OK
 
@@ -104,7 +103,6 @@ d.matricula_funcionario = f.matricula AND
 d.cpf in (SELECT cpf
           FROM DEPENDENTE d 
           WHERE trunc(to_char(sysdate - d.data_nasc)/365) >= 18)      
-
      
 --13 Consulta rodando, TESTADA OK
     
@@ -117,6 +115,18 @@ CREATE VIEW lista AS (
 --14 Consulta não está rodando, ir consertando
      
 CREATE VIEW list_CNPJ AS
+
+SELECT f.cnpj
+FROM FORNECEDOR f, SOLICITACAO s
+WHERE (s.data_solicitacao BETWEEN '01/01/2019' AND '31/12/2019') AND (f.cnpj = s.cnpj_fornecedor) 
+
+SELECT AVG(valor_compra) AS mediaVendas
+FROM NOTA_FISCAL n, SOLICITACAO s
+WHERE n.identificador_solicitacao = s.identificador
+
+
+
+
 SELECT f.cnpj
 FROM FORNECEDOR f, NOTA_FISCAL n, SOLICITACAO s
 WHERE n.identificador_solicitacao =s.identificador AND (n.data,year) = 2019 AND
