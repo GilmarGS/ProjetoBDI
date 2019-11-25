@@ -112,28 +112,15 @@ CREATE VIEW lista AS (
     WHERE p.id_categoria = c.identificador AND c.nome= 'Limpeza' AND
     p.quantidade*p.preco_compra > 200)
      
---14 Consulta não está rodando, ir consertando
+--14 Consulta rodando - TESTADO OK
      
 CREATE VIEW list_CNPJ AS
-
 SELECT f.cnpj
 FROM FORNECEDOR f, SOLICITACAO s
-WHERE (s.data_solicitacao BETWEEN '01/01/2019' AND '31/12/2019') AND (f.cnpj = s.cnpj_fornecedor) 
-
-SELECT AVG(valor_compra) AS mediaVendas
-FROM NOTA_FISCAL n, SOLICITACAO s
-WHERE n.identificador_solicitacao = s.identificador
-
-
-
-
-SELECT f.cnpj
-FROM FORNECEDOR f, NOTA_FISCAL n, SOLICITACAO s
-WHERE n.identificador_solicitacao =s.identificador AND (n.data,year) = 2019 AND
-    SELECT MAX(SELECT SUM(valor_compra)
-              FROM SOLICITACAO s, Solicitacao a
-              GROUP BY valor_compra
-              HAVING s.cnpj_fornecedor = a.cnpj_fornecedor)
+WHERE ((s.data_solicitacao BETWEEN '01/01/2019' AND '31/12/2019') AND (f.cnpj = s.cnpj_fornecedor)) 
+        AND (s.valor_compra >= (SELECT MAX(s.valor_compra) AS maiorVenda
+                                FROM FORNECEDOR f, SOLICITACAO s
+                                WHERE f.cnpj = s.cnpj_fornecedor))
      
      
 -- 15 Consulta rodando - TESTADA OK
