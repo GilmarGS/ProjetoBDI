@@ -186,6 +186,23 @@ BEGIN
 COMMIT;
 END;
      
+                                                               
+                                                               
+CREATE PROCEDURE calculaComprasNoPeriodo
+@primeira_data_hora TIMESTAMP,
+@segunda_data_hora TIMESTAMP
+AS
+DECLARE @total_compras varchar(900)
+SET @total_compras = 'SELECT SUM(i.preco_produto * i.quantidade) 
+FROM ITEM i, ORDEM_COMPRA o
+WHERE ((i.num_nota_fiscal_ordem = o.numero_nota_fiscal) AND (o.data_hora BETWEEN o.primeira_data_hora AND o.segunda_data_hora)))'
+                                                               
+DBMS_OUTPUT.PUT_LINE('O valor total de compras é'||exec(total_compras));
+END; 
+                                                        
+                                                        
+                                                        
+                                                               
 --20 Consulta rodando - TESTADA OK
      
 CREATE OR REPLACE PROCEDURE alteraPrecoDeVenda
