@@ -87,6 +87,13 @@ HAVING COUNT(*) <= 1
          
 --10
 
+SELECT *
+FROM (SELECT o.*
+    FROM CLIENTE c, ORDEM_COMPRA o
+    WHERE c.cpf = o.cpf_cliente
+    ORDER BY o.data_hora)
+WHERE ROWNUM <= 5
+
 
 --11 Consulta rodando - TESTADA OK
 
@@ -141,14 +148,14 @@ END;
      
 
      
---17 Consulta rodando, REVISAR A LÓGICA - Falta testar com dados
+--17 Consulta rodando, RETORNANDO ERRO
 
 CREATE TRIGGER TRI_SalarioFuncionario_SalarioGerente
 BEFORE INSERT OR UPDATE OF salario ON FUNCIONARIO
 FOR EACH ROW
 WHEN  (((NEW.salario>OLD.salario) AND (NEW.funcao != 'gerente')) AND ((NEW.salario<OLD.salario) AND (NEW.funcao = 'gerente')))
 BEGIN
-    RAISE_APPLICATION_ERROR(-20003, 'Valor salarial não permitido');
+        RAISE_APPLICATION_ERROR(-20003, 'Valor salarial não permitido');
 END;
      
 --18  Consulta rodando - TESTADA OK
@@ -178,9 +185,6 @@ BEGIN
     
 COMMIT;
 END;
-
---A tabela de ITEM possui chave estrangeira de ORDEM_COMPRA, além do preço do produto e quantidade. De posse das ordens de compra, basta calcular o preço e quantidade para cada ordem e somar. (Palavras de Thiago kk)
-
      
 --20 Consulta rodando - TESTADA OK
      
