@@ -1,5 +1,5 @@
 # ProjetoBDI
-## 2ª parte do projeto da disciplina Banco de Dados.
+## Projeto da disciplina Banco de Dados.
 Equipe: 
 * Angela Cristina
 * Arhur Fernandes
